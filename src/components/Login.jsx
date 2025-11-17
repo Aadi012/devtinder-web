@@ -1,22 +1,35 @@
 import axios from "axios";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
+import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../utils/constant";
+
 
 const Login = () => {
- const [emailId, setEmailId] = useState("aditya@gmail.com");
- const [password, setPassword] = useState("Aditya@123");
+  const [emailId, setEmailId] = useState("aditya@gmail.com");
+  const [password, setPassword] = useState("Aditya@123");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-const handleLogin = async (e) =>{
-     try{
-        e.preventDefault();
-        const res = await axios.post("http://localhost:8888/login",{
+  const handleLogin = async (e) => {
+    try {
+      e.preventDefault();
+      const res = await axios.post(
+         BASE_URL +"/login",
+        {
           emailId,
-          password
-        },{withCredentials :true});
-     }catch(err){
-      console.error(err);
-     }
-};
+          password,
+        },
+        { withCredentials: true }
+      );
 
+      dispatch(addUser(res.data));
+      return navigate("/feed");
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-base-200">
@@ -32,7 +45,7 @@ const handleLogin = async (e) =>{
           <form className="flex flex-col gap-4">
             <input
               type="email"
-              value = {emailId}
+              value={emailId}
               placeholder="Email (must be @gmail.com)"
               className="input input-bordered w-full"
               required
@@ -40,13 +53,17 @@ const handleLogin = async (e) =>{
             />
             <input
               type="password"
-              value = {password}
+              value={password}
               placeholder="Password"
               className="input input-bordered w-full"
               required
-              onChange={(e) =>setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             />
-            <button type="submit" className="btn btn-primary w-full mt-20" onClick={handleLogin}>
+            <button
+              type="submit"
+              className="btn btn-primary w-full mt-20"
+              onClick={handleLogin}
+            >
               Login
             </button>
           </form>

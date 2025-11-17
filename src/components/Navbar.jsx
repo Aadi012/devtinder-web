@@ -1,4 +1,10 @@
+import { useSelector } from "react-redux";
+
 const Navbar = () => {
+
+  const user = useSelector((store) =>store.user);
+  console.log(user);
+
   return (
     <div className="navbar bg-base-200 shadow-md px-6">
       <div className="flex-1">
@@ -10,13 +16,14 @@ const Navbar = () => {
       <div className="flex items-center gap-4">
         <a className="btn btn-ghost">Projects</a>
         <a className="btn btn-ghost">Teams</a>
-
-        <div className="dropdown dropdown-end">
+   
+       {user && ( <div className="dropdown dropdown-end">
+            <p >Welcome, {user.firstName}</p>
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full border border-gray-300">
               <img
-                alt="Avatar"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                alt="user photo"
+                src= {user.photoUrl}
               />
             </div>
           </label>
@@ -34,7 +41,7 @@ const Navbar = () => {
               <a>Logout</a>
             </li>
           </ul>
-        </div>
+        </div>)}
       </div>
     </div>
   );
