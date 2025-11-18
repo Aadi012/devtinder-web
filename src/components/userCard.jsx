@@ -1,94 +1,68 @@
-const UserCard = ({
-  name = "Anonymous Developer",
-  role = "Full-Stack Engineer",
-  img = "https://cdn-icons-png.flaticon.com/512/4712/4712100.png", // coding avatar
-  user,
-}) => {
+const UserCard = ({ user }) => {
+  if (!user) return null;
 
-    const { firstName, lastName, photoUrl,gender,age, about} = user;
-   
+  const {
+    firstName,
+    lastName,
+    photoUrl,
+    gender,
+    age,
+    about,
+    skills = [],
+    isAvailable = true,
+  } = user;
+
+  const avatar = photoUrl && photoUrl.trim() !== ""
+    ? photoUrl
+    : "https://cdn-icons-png.flaticon.com/512/4712/4712100.png"; // default coding avatar
+
   return (
-    <div className="
-      w-80 
-      p-6 
-      rounded-2xl 
-      bg-white/80 
-      dark:bg-gray-800/60
-      backdrop-blur-xl 
-      shadow-xl 
-      border 
-      border-gray-200/60 
-      dark:border-gray-700/60
-      transition-all 
-      duration-300 
-      hover:shadow-2xl 
-      hover:-translate-y-1
-    ">
-      <div className="flex flex-col items-center text-center">
-
-        {/* Avatar */}
+    <div className="w-80 bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300">
+      <div className="relative flex justify-center mt-6">
         <img
-          src={photoUrl}
+          src={avatar}
           alt="avatar"
-          className="
-            w-24 h-24 
-            rounded-full 
-            border-4 
-            border-blue-500 
-            dark:border-blue-400
-            shadow-md
-            p-1 
-            bg-white
-          "
+          className="w-24 h-24 rounded-full border-4 border-blue-500 dark:border-blue-400 shadow-md"
         />
+        {isAvailable && (
+          <span className="absolute bottom-1 right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></span>
+        )}
+      </div>
 
-        {/* Name */}
-        <h2 className="mt-4 text-xl font-semibold text-gray-800 dark:text-gray-100">
-          {firstName + " " + lastName}
+      <div className="px-6 py-4 text-center">
+        <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">
+          {firstName || "Anonymous"} {lastName || "Developer"}
         </h2>
 
-        {/* Role */}
-        <p className="text-gray-500 dark:text-gray-400 text-sm">
-          {role}
-        </p>
-        {age && gender && <p>{age + "  " + gender}</p>}
-        <p>{about}</p>
-        {/* Buttons */}
-        <div className="flex gap-3 mt-5">
+        {(age || gender) && (
+          <p className="text-gray-500 dark:text-gray-400 mt-1 text-sm">
+            {age ? age + " yrs" : ""} {age && gender ? " • " : ""} {gender}
+          </p>
+        )}
 
-          {/* Connect / Interested */}
-          <button
-            className="
-              px-4 py-2 
-              bg-blue-600 
-              hover:bg-blue-700 
-              text-white 
-              rounded-xl 
-              shadow-md 
-              transition
-              dark:bg-blue-500 
-              dark:hover:bg-blue-600
-            "
-          >
+        <p className="text-gray-600 dark:text-gray-300 mt-3 text-sm">
+          {about || "Passionate developer, loves coding."}
+        </p>
+
+        {skills.length > 0 && (
+          <div className="flex flex-wrap justify-center gap-2 mt-3">
+            {skills.map((skill, idx) => (
+              <span
+                key={idx}
+                className="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full dark:bg-blue-700 dark:text-blue-100"
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <div className="flex gap-4 mt-6">
+          <button className="flex-1 py-2 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg shadow transition">
             Connect
           </button>
-
-          {/* Ignore / Skip */}
-          <button
-            className="
-              px-4 py-2 
-              bg-gray-200 
-              hover:bg-gray-300 
-              text-gray-700 
-              rounded-xl 
-              shadow 
-              transition
-              dark:bg-gray-700 
-              dark:hover:bg-gray-600 
-              dark:text-gray-200
-            "
-          >
-            Skip
+          <button className="flex-1 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-lg shadow transition dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200">
+            Ignore
           </button>
         </div>
       </div>
