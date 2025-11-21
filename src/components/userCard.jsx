@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "../utils/constant";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { removeUserFromFeed } from "../utils/feedSlice";
 import { useState } from "react";
 
@@ -20,6 +20,9 @@ const UserCard = ({ user }) => {
   } = user;
 
   const dispatch = useDispatch();
+  const loggedInUser = useSelector((state) => state.user);
+  const isOwnProfile = loggedInUser?._id === _id;
+
   const [loading, setLoading] = useState(false);
 
   const handleSendRequest = async (status, userId) => {
@@ -42,7 +45,7 @@ const UserCard = ({ user }) => {
   const avatar =
     photoUrl && photoUrl.trim() !== ""
       ? photoUrl
-      : "https://cdn-icons-png.flaticon.com/512/4712/4712100.png"; // default avatar
+      : "https://cdn-icons-png.flaticon.com/512/4712/4712100.png";
 
   return (
     <div className="w-80 bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300">
@@ -85,22 +88,25 @@ const UserCard = ({ user }) => {
           </div>
         )}
 
-        <div className="flex gap-4 mt-6">
-          <button
-            disabled={loading}
-            className="flex-1 py-2 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg shadow transition disabled:opacity-50"
-            onClick={() => handleSendRequest("interested", _id)}
-          >
-            {loading ? "Sending..." : "Connect"}
-          </button>
-          <button
-            disabled={loading}
-            className="flex-1 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-lg shadow transition dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200 disabled:opacity-50"
-            onClick={() => handleSendRequest("ignored", _id)}
-          >
-            {loading ? "Sending..." : "Ignore"}
-          </button>
-        </div>
+        {/* Hide Connect & Ignore buttons on own profile */}
+        {!isOwnProfile && (
+          <div className="flex gap-4 mt-6">
+            <button
+              disabled={loading}
+              className="flex-1 py-2 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg shadow transition disabled:opacity-50"
+              onClick={() => handleSendRequest("interested", _id)}
+            >
+              {loading ? "Sending..." : "Connect"}
+            </button>
+            <button
+              disabled={loading}
+              className="flex-1 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-lg shadow transition dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200 disabled:opacity-50"
+              onClick={() => handleSendRequest("ignored", _id)}
+            >
+              {loading ? "Sending..." : "Ignore"}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

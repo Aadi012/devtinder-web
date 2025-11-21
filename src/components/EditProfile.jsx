@@ -1,7 +1,7 @@
 import { useState } from "react";
 import UserCard from "./userCard";
 import axios from "axios";
-import { BASE_URL } from "../utils/constant"; // Make sure this file exists
+import { BASE_URL } from "../utils/constant";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 
@@ -121,7 +121,16 @@ const EditProfile = ({ user }) => {
         {/* Live Preview Section */}
         <div className="w-full lg:w-1/3 flex justify-center">
           <UserCard
-            user={{ firstName, lastName, photoUrl, age, gender, about, skills }}
+            user={{
+              _id: user._id, // <-- IMPORTANT FIX (prevents Connect/Ignore from showing)
+              firstName,
+              lastName,
+              photoUrl,
+              age,
+              gender,
+              about,
+              skills
+            }}
           />
         </div>
       </div>
