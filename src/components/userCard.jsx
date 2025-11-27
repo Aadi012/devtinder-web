@@ -36,7 +36,8 @@ const UserCard = ({ user }) => {
       dispatch(removeUserFromFeed(userId));
       console.log(res.data.message);
     } catch (err) {
-      console.error(err.message);
+      console.error("Request error:", err?.response?.data || err?.message || err);
+
     } finally {
       setLoading(false);
     }
