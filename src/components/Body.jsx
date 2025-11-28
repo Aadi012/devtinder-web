@@ -10,27 +10,34 @@ import { useEffect } from "react";
 const Body = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userData = useSelector((store) =>store.user);
+  const userData = useSelector((store) => store.user);
+
+  const publicRoutes = [
+    "/", "/login", "/signup",
+    "/about", "/contact",
+    "/privacy-policy", "/terms-and-conditions"
+  ];
 
   const fetchUser = async () => {
-  if (userData) return;
-  try {
-    const res = await axios.get(BASE_URL + "/profile/view", {
-      withCredentials: true,
-    });
-    dispatch(addUser(res.data));
-  } catch (err) {
-    const code = err.response?.status;
+    if (userData) return;
 
-    if (code === 400 || code === 401) {
-      navigate("/login");
-      return;
+    try {
+      const res = await axios.get(BASE_URL + "/profile/view", {
+        withCredentials: true,
+      });
+
+      dispatch(addUser(res.data));
+
+    } catch (err) {
+      const status = err.response?.status;
+
+      if ((status === 400 || status === 401) &&
+        !publicRoutes.includes(window.location.pathname)) {
+        
+        setTimeout(() => navigate("/login"), 300);
+      }
     }
-
-    console.error(err);
-  }
-};
-
+  };
 
   useEffect(() => {
     fetchUser();

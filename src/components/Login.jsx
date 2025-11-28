@@ -5,12 +5,15 @@ import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constant";
 
-const Login = () => {
-  const [emailId, setEmailId] = useState("aditya@gmail.com");
-  const [password, setPassword] = useState("Aditya@125");
+const Login = ({ initialMode = "login" }) => {
+  const [emailId, setEmailId] = useState("");
+  const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [isLoginForm, setIsLoginForm] = useState(true);
+
+  // THIS LINE MAKES /signup SHOW SIGNUP FORM AUTOMATICALLY
+  const [isLoginForm, setIsLoginForm] = useState(initialMode !== "signup");
+
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -19,16 +22,20 @@ const Login = () => {
 
   const handleLogin = async () => {
     setLoading(true);
+    setError("");
+
     try {
       const res = await axios.post(
         BASE_URL + "/login",
         { emailId, password },
         { withCredentials: true }
       );
+
       dispatch(addUser(res.data.data));
       navigate("/feed");
+
     } catch (err) {
-      setError(err?.response?.data || "Something went wrong");
+      setError(err?.response?.data?.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -36,16 +43,20 @@ const Login = () => {
 
   const handleSignUp = async () => {
     setLoading(true);
+    setError("");
+
     try {
       const res = await axios.post(
         BASE_URL + "/signup",
         { firstName, lastName, emailId, password },
         { withCredentials: true }
       );
+
       dispatch(addUser(res.data.data));
       navigate("/profile");
+
     } catch (err) {
-      setError(err?.response?.data || "Something went wrong");
+      setError(err?.response?.data?.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -54,17 +65,18 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 p-6">
       <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-10 w-full max-w-md transition-transform transform hover:scale-105">
-        {/* Title */}
+
         <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 text-center mb-2">
           {isLoginForm ? "Welcome Back!" : "Create Your Account"}
         </h2>
+
         <p className="text-center text-gray-500 dark:text-gray-400 mb-6">
           {isLoginForm
-            ? "Sign in to continue to DevConnect"
+            ? "Sign in to continue to Homio"
             : "Fill in your details to sign up"}
         </p>
 
-        {/* Name fields for signup */}
+        {/* Signup name fields */}
         {!isLoginForm && (
           <div className="flex gap-4 mb-4">
             <input
@@ -72,14 +84,15 @@ const Login = () => {
               placeholder="First Name"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
-              className="input input-bordered w-1/2 focus:ring-2 focus:ring-primary rounded-lg transition"
+              className="input input-bordered w-1/2"
             />
+
             <input
               type="text"
               placeholder="Last Name"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
-              className="input input-bordered w-1/2 focus:ring-2 focus:ring-primary rounded-lg transition"
+              className="input input-bordered w-1/2"
             />
           </div>
         )}
@@ -91,51 +104,44 @@ const Login = () => {
             placeholder="Email Address"
             value={emailId}
             onChange={(e) => setEmailId(e.target.value)}
-            className="input input-bordered w-full focus:ring-2 focus:ring-primary rounded-lg transition"
+            className="input input-bordered w-full"
           />
+
           <input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="input input-bordered w-full focus:ring-2 focus:ring-primary rounded-lg transition"
+            className="input input-bordered w-full"
           />
         </div>
 
-        {/* Error message */}
-        {error && <p className="text-red-500 mt-3 text-center">{error}</p>}
+        {/* Error */}
+        {error && (
+          <p className="text-red-500 text-center mt-3">{error}</p>
+        )}
 
-        {/* Submit button */}
+        {/* Button */}
         <button
           onClick={isLoginForm ? handleLogin : handleSignUp}
           disabled={loading}
-          className="w-full mt-6 py-3 bg-primary text-white rounded-xl font-semibold shadow-md hover:shadow-lg hover:scale-105 transition disabled:opacity-50"
+          className="w-full mt-6 py-3 bg-primary text-white rounded-xl shadow-md"
         >
-          {loading ? "Processing..." : isLoginForm ? "Login" : "Sign Up"}
+          {loading
+            ? "Processing..."
+            : isLoginForm ? "Login" : "Sign Up"}
         </button>
 
-        {/* Switch forms */}
+        {/* Switch Forms */}
         <p
-          className="mt-4 text-center text-gray-500 dark:text-gray-400 cursor-pointer hover:underline font-medium"
+          className="mt-4 text-center text-gray-500 cursor-pointer hover:underline"
           onClick={() => setIsLoginForm(!isLoginForm)}
         >
           {isLoginForm
-            ? "New here? Create an account"
+            ? "New user? Create an account"
             : "Already have an account? Login"}
         </p>
 
-        {/* Social buttons */}
-        <div className="mt-6 text-center text-gray-400">
-          <p className="mb-2">Or continue with</p>
-          <div className="flex justify-center gap-4">
-            <button className="btn btn-outline btn-sm rounded-full hover:bg-gray-100 transition">
-              Google
-            </button>
-            <button className="btn btn-outline btn-sm rounded-full hover:bg-gray-100 transition">
-              GitHub
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );
