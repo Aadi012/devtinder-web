@@ -1,22 +1,111 @@
 const Terms = () => {
   return (
-    <div className="max-w-5xl mx-auto py-16 px-6">
-      <h1 className="text-4xl font-bold text-primary mb-6">Terms & Conditions</h1>
-      <p className="text-gray-700 leading-relaxed mb-4">
-        By accessing Homio, you agree to follow these Terms & Conditions.
-      </p>
+    <div className="
+      min-h-screen relative overflow-hidden
+      bg-[linear-gradient(to_bottom_right,#ffe0f7,#e6e7ff,#e0f1ff)]
+      px-6 py-24 text-gray-900
+    ">
 
-      <h2 className="text-2xl font-semibold mt-6 mb-3">Eligibility</h2>
-      <p className="text-gray-700">Users must be 18+ and provide accurate information.</p>
+      <div className="max-w-4xl mx-auto">
 
-      <h2 className="text-2xl font-semibold mt-6 mb-3">Usage</h2>
-      <p className="text-gray-700">Users may not engage in spam, abuse, or uploading harmful content.</p>
+        <h1 className="
+          text-5xl font-extrabold mb-10 text-center
+          bg-linear-to-r from-indigo-600 to-pink-600
+          text-transparent bg-clip-text
+        ">
+          Terms & Conditions
+        </h1>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-3">Governing Law</h2>
-      <p className="text-gray-700">This agreement is governed by Indian law.</p>
+        <div className="
+          bg-white/25 backdrop-blur-xl p-10 rounded-3xl
+          border border-white/30 shadow-xl space-y-10
+        ">
+
+          <p className="text-gray-700 text-lg leading-relaxed">
+            By using <strong>Homio</strong>, you agree to follow these terms.
+            These guidelines ensure a safe, meaningful and productive experience for all developers.
+          </p>
+
+          {/* Eligibility — Age restriction removed */}
+          <section>
+            <h2 className="text-2xl font-semibold text-indigo-600 mb-2">
+              🧑‍💻 User Eligibility
+            </h2>
+            <p className="text-gray-700 leading-relaxed">
+              Homio is intended for developers, students, and technology enthusiasts.
+              Users must provide accurate information and follow community guidelines.
+            </p>
+          </section>
+
+          {/* Community rules */}
+          <section>
+            <h2 className="text-2xl font-semibold text-indigo-600 mb-2">
+              📌 Community & Usage Rules
+            </h2>
+            <p className="text-gray-700 leading-relaxed">
+              You agree NOT to:
+              <br />• Harass, abuse, spam, or threaten others  
+              <br />• Create fake accounts or impersonate others  
+              <br />• Upload harmful code, viruses, or malicious content  
+              <br />• Attempt to breach or bypass platform security  
+              <br />• Misuse features such as mass requests or automation  
+              <br /><br />
+              Homio may suspend or restrict accounts that violate these rules.
+            </p>
+          </section>
+
+          {/* IP Rights */}
+          <section>
+            <h2 className="text-2xl font-semibold text-indigo-600 mb-2">
+              © Intellectual Property
+            </h2>
+            <p className="text-gray-700 leading-relaxed">
+              Users retain ownership of their projects, ideas, code snippets, and content.
+              Homio does not claim rights over user-generated content.
+            </p>
+          </section>
+
+          {/* Limitation of liability */}
+          <section>
+            <h2 className="text-2xl font-semibold text-indigo-600 mb-2">
+              ⚖️ Limitation of Liability
+            </h2>
+            <p className="text-gray-700 leading-relaxed">
+              Homio provides a platform for collaboration but is not responsible for the outcome of
+              partnerships, communication between users, or project results.
+            </p>
+          </section>
+
+          {/* Hosting + Infra section */}
+          <section>
+            <h2 className="text-2xl font-semibold text-indigo-600 mb-2">
+              🌐 Infrastructure & Hosting
+            </h2>
+            <p className="text-gray-700 leading-relaxed">
+              Homio operates using:
+              <br />• AWS EC2 for backend hosting  
+              <br />• Cloudflare for CDN, DDoS protection & performance  
+              <br />• MongoDB Atlas for secure database storage  
+              <br /><br />
+              While we follow industry best practices, uninterrupted service cannot be guaranteed.
+            </p>
+          </section>
+
+          {/* Reporting */}
+          <section>
+            <h2 className="text-2xl font-semibold text-indigo-600 mb-2">
+              🚨 Reporting Issues
+            </h2>
+            <p className="text-gray-700 leading-relaxed">
+              Users can report abusive or suspicious behavior by contacting:
+              <br /><strong>jhaaditya778@gmail.com</strong>
+            </p>
+          </section>
+
+        </div>
+      </div>
     </div>
   );
 };
 
 export default Terms;
-

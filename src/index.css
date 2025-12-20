@@ -1,2 +1,173 @@
+/* ----------------------------
+   TAILWIND + DAISYUI
+----------------------------- */
 @import "tailwindcss";
 @plugin "daisyui";
+
+/* ----------------------------
+   GLOBAL MICRO COMPONENTS
+----------------------------- */
+
+/* Skill / Interest / Chip Tag */
+.tag {
+  @apply px-3 py-1 text-sm rounded-full
+         bg-gray-100 text-gray-700
+         dark:bg-gray-800 dark:text-gray-200
+         border border-gray-200 dark:border-gray-700
+         transition-colors duration-200;
+}
+
+/* ----------------------------
+   SMOOTH THEME TRANSITION
+----------------------------- */
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ----------------------------
+   SMOOTH SCROLLING
+----------------------------- */
+html,
+body {
+  scroll-behavior: smooth;
+}
+
+/* ----------------------------
+   DISABLE HORIZONTAL OVERFLOW
+----------------------------- */
+body {
+  overflow-x: hidden;
+}
+
+/* ----------------------------
+   PREMIUM SELECTION COLOR
+----------------------------- */
+::selection {
+  background: rgba(99, 102, 241, 0.3); /* indigo-500 */
+  color: #000;
+}
+
+/* ===========================================================
+   🔥 GLOBAL ANIMATION SYSTEM
+=========================================================== */
+
+/* Fade + slight slide (text, sections) */
+@keyframes fade-slide {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-slide {
+  animation: fade-slide 0.45s ease-out;
+}
+
+/* Drop reveal (headers, hero blocks) */
+@keyframes drop-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-14px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-drop-reveal {
+  animation: drop-reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Card fade-in (lists, feed items) */
+@keyframes drop-fade {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-drop-fade {
+  animation: drop-fade 0.6s ease-out;
+}
+
+/* Micro reveal (buttons, icons) */
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-\[fadeSlide_0\.2s_ease-out\] {
+  animation: fadeSlide 0.2s ease-out;
+}
+
+/* Card pop (connections, profiles) */
+@keyframes cardPop {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+  }
+}
+
+.animate-cardPop {
+  animation: cardPop 0.45s ease-out;
+}
+
+/* ===========================================================
+   🌟 DAISYUI THEME OVERRIDES
+=========================================================== */
+
+/* LIGHT MODE */
+html[data-theme="light"] {
+  --b1: 0 0% 100%;   /* Pure white background */
+  --b2: 0 0% 98%;
+  --b3: 0 0% 96%;
+  --bc: 0 0% 20%;    /* Text color */
+}
+
+/* DARK MODE */
+html[data-theme="dark"] {
+  --b1: 225 12% 12%; /* Clean dark gray */
+  --b2: 225 10% 10%;
+  --b3: 225 8% 8%;
+  --bc: 0 0% 96%;
+}
+
+/* =========================================
+   🔗 SHARED NAVBAR + FOOTER LINK HOVER
+   ========================================= */
+
+.link-hover-gradient {
+  transition: all 0.3s ease;
+}
+
+.link-hover-gradient:hover {
+  background-image: linear-gradient(
+    to right,
+    #ec4899, /* pink-500 */
+    #8b5cf6, /* violet-500 */
+    #6366f1  /* indigo-500 */
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
