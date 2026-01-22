@@ -18,6 +18,7 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import Terms from "./components/Term";
+import Premium from "./components/Premium";
 
 function App() {
   return (
@@ -42,8 +43,9 @@ function App() {
             <Route path="profile" element={<Profile />} />
             <Route path="connections" element={<Connections />} />
             <Route path="requests" element={<Requests />} />
+            <Route path="premium" element={<Premium />} />
 
-            {/* ✅ PUBLIC USER PROFILE */}
+            {/*  PUBLIC USER PROFILE */}
             <Route path="user/:id" element={<UserPublicProfile />} />
 
           </Route>
